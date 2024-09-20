@@ -1,292 +1,294 @@
-
-
-
+<!-- Main container -->
+<div class="container" style="margin-top: 1px;">
+  <!-- Search bar container -->
+  <div class="container my-4">
+      <!-- Form group for search input -->
+      <div class="form-group">
+          <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Search" 
+              id="in"
+              (input)="filterEmployees($event)" 
+              style="max-width: 400px; height: 40px; margin-top: 8px;"
+          />
+      </div> 
+  </div> 
   
-      
-     
-    
-    <div class="container" style="margin-top: 1px;">
-        <div class="container my-4">
-            <div class="form-group">
-                <input 
-                    type="text" 
-                    class="form-control" 
-                    placeholder="Search" 
-                    id="in"
-                    (input)="filterEmployees($event)" 
-                    style="max-width: 400px; height: 40px; margin-top: 8px;"
-                />
-            </div>
-        </div>
-        
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th (click)="sortBy('id')" [ngClass]="{'sort-active': sortColumn === 'id'}">
-                            ID 
-                            <span *ngIf="sortColumn === 'id' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'id' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('age')" [ngClass]="{'sort-active': sortColumn === 'age'}">
-                            Age 
-                            <span *ngIf="sortColumn === 'age' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'age' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('dob')" [ngClass]="{'sort-active': sortColumn === 'dob'}">
-                            Dob 
-                            <span *ngIf="sortColumn === 'dob' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'dob' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('email')" [ngClass]="{'sort-active': sortColumn === 'email'}">
-                            Email 
-                            <span *ngIf="sortColumn === 'email' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'email' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('salary')" [ngClass]="{'sort-active': sortColumn === 'salary'}">
-                            Salary 
-                            <span *ngIf="sortColumn === 'salary' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'salary' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('address')" [ngClass]="{'sort-active': sortColumn === 'address'}">
-                            Address 
-                            <span *ngIf="sortColumn === 'address' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'address' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('imageUrl')" [ngClass]="{'sort-active': sortColumn === 'imageUrl'}">
-                            ImageUrl 
-                            <span *ngIf="sortColumn === 'imageUrl' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'imageUrl' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('lastName')" [ngClass]="{'sort-active': sortColumn === 'lastName'}">
-                            Last Name 
-                            <span *ngIf="sortColumn === 'lastName' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'lastName' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('firstName')" [ngClass]="{'sort-active': sortColumn === 'firstName'}">
-                            First Name 
-                            <span *ngIf="sortColumn === 'firstName' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'firstName' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th (click)="sortBy('contactNumber')" [ngClass]="{'sort-active': sortColumn === 'contactNumber'}">
-                            Contact Number 
-                            <span *ngIf="sortColumn === 'contactNumber' && sortDirection === 'asc'">↑</span>
-                            <span *ngIf="sortColumn === 'contactNumber' && sortDirection === 'desc'">↓</span>
-                        </th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let employee of paginatedEmployees">
-                        <td>{{ employee.id }}</td>
-                        <td>{{ employee.age }}</td>
-                        <td>{{ employee.dob }}</td>
-                        <td>{{ employee.email }}</td>
-                        <td>{{ employee.salary }}</td>
-                        <td>{{ employee.address }}</td>
-                        <td>{{ employee.imageUrl }}</td>
-                        <td>{{ employee.lastName }}</td>
-                        <td>{{ employee.firstName }}</td>
-                        <td>{{ employee.contactNumber }}</td>
-                        <td>
-                            <button class="btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>div>        
-        
-          
-            <div class="text-center my-4">
-              <button class="btn btn-primary" (click)="toggleForm()">
-                {{ showForm ? 'Hide Form' : 'Add Employee' }}
-              </button>
-            </div>
-          
-            <div *ngIf="showForm" class="employee-form-container">
-              <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)" novalidate>
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="id"
-                          [(ngModel)]="newEmployee.id"
-                          placeholder="ID"
-                          required
-                          #id="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="id.invalid && (id.dirty || id.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="id.errors?.required">ID is required.</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="firstName"
-                          [(ngModel)]="newEmployee.firstName"
-                          placeholder="First Name"
-                          required minlength="2"
-                          #firstName="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="firstName.errors?.required">First Name is required.</div>
-                          <div *ngIf="firstName.errors?.minlength">First Name must be at least 2 characters long.</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="lastName"
-                          [(ngModel)]="newEmployee.lastName"
-                          placeholder="Last Name"
-                          required minlength="2"
-                          #lastName="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="lastName.errors?.required">Last Name is required.</div>
-                          <div *ngIf="lastName.errors?.minlength">Last Name must be at least 2 characters long.</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="email"
-                          [(ngModel)]="newEmployee.email"
-                          placeholder="Email"
-                          required email
-                          #email="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="email.errors?.required">Email is required.</div>
-                          <div class="alert alert-danger" *ngIf="email.errors?.email">Email must be valid.</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="dob"
-                          [(ngModel)]="newEmployee.dob"
-                          placeholder="Dob (YYYY-MM-DD)"
-                          required
-                          #dob="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="dob.errors?.required">Date of Birth is required.</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="age"
-                          [(ngModel)]="newEmployee.age"
-                          type="number"
-                          placeholder="Age"
-                          required min="0"
-                          #age="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="age.invalid && (age.dirty || age.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="age.errors?.required">Age is required.</div>
-                          <div *ngIf="age.errors?.min">Age must be a positive number.</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="salary"
-                          [(ngModel)]="newEmployee.salary"
-                          placeholder="Salary"
-                          required
-                          #salary="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="salary.invalid && (salary.dirty || salary.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="salary.errors?.required">Salary is required.</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="address"
-                          [(ngModel)]="newEmployee.address"
-                          placeholder="Address"
-                          required
-                          #address="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="address.errors?.required">Address is required.</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="imageUrl"
-                          [(ngModel)]="newEmployee.imageUrl"
-                          placeholder="Image URL"
-                          required
-                          #imageUrl="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="imageUrl.invalid && (imageUrl.dirty || imageUrl.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="imageUrl.errors?.required">Image URL is required.</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                        <input
-                          name="contactNumber"
-                          [(ngModel)]="newEmployee.contactNumber"
-                          placeholder="Contact Number"
-                          required
-                          #contactNumber="ngModel"
-                          class="form-control"
-                        />
-                        <div *ngIf="contactNumber.invalid && (contactNumber.dirty || contactNumber.touched)" class="error">
-                          <div class="alert alert-danger" *ngIf="contactNumber.errors?.required">Contact Number is required.</div>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="submit" [disabled]="employeeForm.invalid" class="btn btn-success">Add Employee</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          
+  <!-- Table container -->
+  <div class="table-responsive">
+      <!-- Table with employee data -->
+      <table class="table table-bordered table-striped table-hover">
+          <!-- Table header with sorting functionality -->
+          <thead>
+              <tr>
+                  <th (click)="sortBy('id')" [ngClass]="{'sort-active': sortColumn === 'id'}">
+                      ID 
+                      <span *ngIf="sortColumn === 'id' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'id' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('age')" [ngClass]="{'sort-active': sortColumn === 'age'}">
+                      Age 
+                      <span *ngIf="sortColumn === 'age' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'age' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('dob')" [ngClass]="{'sort-active': sortColumn === 'dob'}">
+                      Dob 
+                      <span *ngIf="sortColumn === 'dob' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'dob' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('email')" [ngClass]="{'sort-active': sortColumn === 'email'}">
+                      Email 
+                      <span *ngIf="sortColumn === 'email' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'email' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('salary')" [ngClass]="{'sort-active': sortColumn === 'salary'}">
+                      Salary 
+                      <span *ngIf="sortColumn === 'salary' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'salary' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('address')" [ngClass]="{'sort-active': sortColumn === 'address'}">
+                      Address 
+                      <span *ngIf="sortColumn === 'address' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'address' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('imageUrl')" [ngClass]="{'sort-active': sortColumn === 'imageUrl'}">
+                      ImageUrl 
+                      <span *ngIf="sortColumn === 'imageUrl' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'imageUrl' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('lastName')" [ngClass]="{'sort-active': sortColumn === 'lastName'}">
+                      Last Name 
+                      <span *ngIf="sortColumn === 'lastName' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'lastName' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('firstName')" [ngClass]="{'sort-active': sortColumn === 'firstName'}">
+                      First Name 
+                      <span *ngIf="sortColumn === 'firstName' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'firstName' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th (click)="sortBy('contactNumber')" [ngClass]="{'sort-active': sortColumn === 'contactNumber'}">
+                      Contact Number 
+                      <span *ngIf="sortColumn === 'contactNumber' && sortDirection === 'asc'">↑</span>
+                      <span *ngIf="sortColumn === 'contactNumber' && sortDirection === 'desc'">↓</span>
+                  </th>
+                  <th>Actions</th>
+              </tr>
+          </thead>
+          <!-- Table body for listing employee data -->
+          <tbody>
+              <tr *ngFor="let employee of paginatedEmployees">
+                  <td>{{ employee.id }}</td>
+                  <td>{{ employee.age }}</td>
+                  <td>{{ employee.dob }}</td>
+                  <td>{{ employee.email }}</td>
+                  <td>{{ employee.salary }}</td>
+                  <td>{{ employee.address }}</td>
+                  <td>{{ employee.imageUrl }}</td>
+                  <td>{{ employee.lastName }}</td>
+                  <td>{{ employee.firstName }}</td>
+                  <td>{{ employee.contactNumber }}</td>
+                  <td>
+                      <button class="btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button>
+                  </td>
+              </tr>
+          </tbody> 
+      </table> 
+  </div> 
+</div> 
 
-      
-      
-      <div class="container my-4">
-        <div class="pagination-container d-flex justify-content-between align-items-center">
-          <div class="items-per-page d-flex align-items-center">
-            <button class="btn btn-secondary me-2" (click)="decrementItemsPerPage()">
-              <i class="bi bi-chevron-down"></i>
-            </button>
-            <select class="form-select me-2" (change)="setItemsPerPage($event)">
-              <option value="10" selected>10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-              <option value="50">50</option>
-            </select>
-            <button class="btn btn-secondary" (click)="incrementItemsPerPage()">
-              <i class="bi bi-chevron-up"></i>
-            </button>
+<!-- Container for Add Employee button -->
+<div class="text-center my-4">
+  <button class="btn btn-primary" (click)="toggleForm()">
+      {{ showForm ? 'Hide Form' : 'Add Employee' }}
+  </button>
+</div> 
+
+<!-- Employee form container, hidden/shown by toggle -->
+<div *ngIf="showForm" class="employee-form-container">
+  <!-- Employee form for adding a new employee -->
+  <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)" novalidate>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <input
+              name="id"
+              [(ngModel)]="newEmployee.id"
+              placeholder="ID"
+              required
+              #id="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="id.invalid && (id.dirty || id.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="id.errors?.required">ID is required.</div>
+            </div>
           </div>
-      
-          <div class="page-navigation d-flex align-items-center">
-            <button class="btn btn-primary me-2" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
-            <span>Page {{ currentPage }} / {{ totalPages }}</span>
-            <button class="btn btn-primary ms-2" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+          <div class="col-md-6 mb-3">
+            <input
+              name="firstName"
+              [(ngModel)]="newEmployee.firstName"
+              placeholder="First Name"
+              required minlength="2"
+              #firstName="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="firstName.errors?.required">First Name is required.</div>
+              <div *ngIf="firstName.errors?.minlength">First Name must be at least 2 characters long.</div>
+            </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <input
+              name="lastName"
+              [(ngModel)]="newEmployee.lastName"
+              placeholder="Last Name"
+              required minlength="2"
+              #lastName="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="lastName.errors?.required">Last Name is required.</div>
+              <div *ngIf="lastName.errors?.minlength">Last Name must be at least 2 characters long.</div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <input
+              name="email"
+              [(ngModel)]="newEmployee.email"
+              placeholder="Email"
+              required email
+              #email="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="email.errors?.required">Email is required.</div>
+              <div class="alert alert-danger" *ngIf="email.errors?.email">Email must be valid.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <input
+              name="dob"
+              [(ngModel)]="newEmployee.dob"
+              placeholder="Dob (YYYY-MM-DD)"
+              required
+              #dob="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="dob.errors?.required">Date of Birth is required.</div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <input
+              name="age"
+              [(ngModel)]="newEmployee.age"
+              type="number"
+              placeholder="Age"
+              required min="0"
+              #age="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="age.invalid && (age.dirty || age.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="age.errors?.required">Age is required.</div>
+              <div *ngIf="age.errors?.min">Age must be a positive number.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <input
+              name="salary"
+              [(ngModel)]="newEmployee.salary"
+              placeholder="Salary"
+              required
+              #salary="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="salary.invalid && (salary.dirty || salary.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="salary.errors?.required">Salary is required.</div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <input
+              name="address"
+              [(ngModel)]="newEmployee.address"
+              placeholder="Address"
+              required
+              #address="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="address.errors?.required">Address is required.</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <input
+              name="imageUrl"
+              [(ngModel)]="newEmployee.imageUrl"
+              placeholder="Image URL"
+              required
+              #imageUrl="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="imageUrl.invalid && (imageUrl.dirty || imageUrl.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="imageUrl.errors?.required">Image URL is required.</div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <input
+              name="contactNumber"
+              [(ngModel)]="newEmployee.contactNumber"
+              placeholder="Contact Number"
+              required
+              #contactNumber="ngModel"
+              class="form-control"
+            />
+            <div *ngIf="contactNumber.invalid && (contactNumber.dirty || contactNumber.touched)" class="error">
+              <div class="alert alert-danger" *ngIf="contactNumber.errors?.required">Contact Number is required.</div>
+            </div>
+          </div>
+        </div>
+        <button type="submit" [disabled]="employeeForm.invalid" class="btn btn-success me-3">Submit</button>
+        <button class="btn btn-danger" type="reset" (click)="resetForm(employeeForm)">Reset</button>
       </div>
-      
-      
+    </div>
+  </form>
+</div> 
+
+<!-- Main container for pagination controls, with margin applied on all sides -->
+<div class="container my-4">
+  <!-- Pagination container: handles the layout for items-per-page and page navigation -->
+  <div class="pagination-container d-flex justify-content-between align-items-center">
+    <div class="items-per-page d-flex align-items-center">
+      <button class="btn btn-secondary me-2" (click)="decrementItemsPerPage()">
+        <i class="bi bi-chevron-down"></i>
+      </button>
+      <select class="form-select me-2" (change)="setItemsPerPage($event)">
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+      <button class="btn btn-secondary" (click)="incrementItemsPerPage()">
+        <i class="bi bi-chevron-up"></i>
+      </button>
+    </div>
+   <!-- Page navigation controls: allows users to navigate between pages -->
+    <div class="page-navigation d-flex align-items-center">
+      <button class="btn btn-primary me-2" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }} / {{ totalPages }}</span>
+      <button class="btn btn-primary ms-2" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+  </div>
+</div>
+
+     
   
