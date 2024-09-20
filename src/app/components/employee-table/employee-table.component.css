@@ -1,0 +1,131 @@
+/* General Styles */
+
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space between left and right */
+  align-items: center; /* Center vertically */
+  padding: 5px; /* Reduced padding */
+  gap: 10px; /* Add gap between items */
+}
+
+.items-per-page {
+  display: flex;
+  align-items: center; /* Center the items vertically */
+  gap: 5px; /* Space between buttons and select */
+}
+
+.page-navigation {
+  display: flex;
+  align-items: center; /* Center the items vertically */
+  gap: 5px; /* Space between buttons and text */
+}
+
+
+.form-group {
+  display: flex;
+  justify-content: center; /* Center the input horizontally */
+}
+
+.form-control {
+  border-radius: 0.25rem; /* Rounded corners */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+
+.btn {
+  padding: 5px 10px; /* Adjust button size */
+  font-size: 0.875rem; /* Smaller font size */
+}
+
+.form-select {
+  width: 70px; /* Set a fixed width for the select box */
+  font-size: 0.875rem; /* Smaller font size */
+}
+
+.employee-form-container {
+  max-width: 600px; /* Limit the width */
+  margin: auto; /* Center the form */
+  padding: 20px; /* Add some padding */
+}
+
+.card {
+  border: 1px solid #ccc; /* Optional border */
+}
+
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Input Styles */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Button Styles */
+button {
+  background-color: #29b3b9;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  th, td {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  input[type="text"] {
+    padding: 8px;
+  }
+
+  button {
+    padding: 8px 12px;
+  }
+}
